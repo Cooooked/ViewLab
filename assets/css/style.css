@@ -107,7 +107,7 @@ a { color: var(--text); }
 .hero-facts li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 1px; background: var(--accent); margin-right: 8px; vertical-align: 1px; }
 
 /* ---------- sections ---------- */
-.section { max-width: 1180px; margin: 0 auto; padding: 72px 20px 8px; }
+.section { scroll-margin-top: 64px;max-width: 1180px; margin: 0 auto; padding: 72px 20px 8px; }
 .section-head { max-width: 720px; margin-bottom: 40px; }
 .kicker {
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
