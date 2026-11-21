@@ -396,7 +396,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 .profile-import{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap}
 #profileImportMsg{font-size:12px;color:var(--accent,#ff5a4e)}
 .sl-restart{font:600 10px 'Cascadia Mono',Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);background:none;border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:6px 10px;cursor:pointer;margin-left:10px}
-.sl-restart:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
+ .sl-restart:hover{color:var(--text);border-color:rgba(255,255,255,.35)}
 button.menu-row{width:100%;background:none;border:1px solid transparent;text-align:left;font-family:inherit;color:inherit;appearance:none}
 button.menu-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -415,7 +415,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 @media (max-width:760px){.capture-demo-body{grid-template-columns:1fr}}
 
 /* back-to-top */
-.to-top{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;background:var(--bg-soft);border:1px solid var(--border-strong);color:var(--ink);font-size:18px;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.to-top{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;background:var(--bg-soft);border:1px solid var(--border-strong);color:var(--text);font-size:18px;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
 .to-top.show{opacity:1;pointer-events:auto;transform:none}
 .to-top:hover{border-color:var(--accent);color:var(--accent)}
 @media (prefers-reduced-motion: reduce){.to-top{transition:none}}
