@@ -888,3 +888,25 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     });
   });
 })();
+
+/* Bench keyboard shortcuts: 1-7 toggle overlays, C compare, V visor. */
+(function () {
+  "use strict";
+  var order = ["ovHud", "ovClock", "ovNote", "ovCross", "ovShift", "ovSpot", "ovLfe"];
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+    var k = e.key;
+    if (k >= "1" && k <= "7") {
+      var el = document.getElementById(order[+k - 1]);
+      if (el) { el.checked = !el.checked; el.dispatchEvent(new Event("change", { bubbles: true })); e.preventDefault(); }
+    } else if (k === "c" || k === "C") {
+      var cmp = document.getElementById("compareOn");
+      if (cmp) { cmp.checked = !cmp.checked; cmp.dispatchEvent(new Event("change", { bubbles: true })); e.preventDefault(); }
+    } else if (k === "v" || k === "V") {
+      var vis = document.getElementById("visorOn");
+      if (vis) { vis.checked = !vis.checked; vis.dispatchEvent(new Event("change", { bubbles: true })); e.preventDefault(); }
+    }
+  });
+})();
