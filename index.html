@@ -32,6 +32,7 @@
       <a href="#panels">VR panels</a>
       <a href="#racing">Racing</a>
       <a href="#capture">Capture</a>
+      <a href="#faq">FAQ</a>
     </nav>
     <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
@@ -293,6 +294,22 @@
       <article class="card"><h3>Media Capture source</h3><p>Eye selection, overlay toggle, four crop sliders and reinitialize — stream or record exactly what the headset shows.</p></article>
       <article class="card"><h3>Enhancer &amp; Stabilizer</h3><p>Companion capture filters installed from the app: image adjustment (sharpness, saturation, contrast, gamma) and motion stabilization.</p></article>
       <article class="card"><h3>ReShade, remotely</h3><p>Bundled ReShade support with an in-app control popout — adjust shaders without leaving VR.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq">
+    <div class="section-head">
+      <p class="kicker">Good to know</p>
+      <h2>Questions, answered</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item"><summary>Does it cost anything?</summary><p>ViewLab is free and open source. If it earns its place in your setup, a coffee keeps development going.</p></details>
+      <details class="faq-item"><summary>Which headsets and games does it work with?</summary><p>Windows VR headsets on supported runtimes, across games and apps that honour standard runtime settings. Per-application profiles handle the exceptions automatically.</p></details>
+      <details class="faq-item"><summary>Does cropping hurt image quality?</summary><p>The render slice is drawn at the game's own resolution — you're asking for less frame, not stretching a smaller one. The visor mask is drawn into the frame at zero GPU cost.</p></details>
+      <details class="faq-item"><summary>Can I still play normally?</summary><p>Yes — disable ViewLab or switch a profile and the game runs untouched. Profiles apply per application, so a racing profile never leaks into a flight sim.</p></details>
+      <details class="faq-item"><summary>What about streaming or recording?</summary><p>Media Capture is a dedicated source that sees the finished frame — overlays, post-processing and panels included — so your audience gets the same picture you do.</p></details>
+      <details class="faq-item"><summary>Is my data collected?</summary><p>No telemetry leaves your machine. ViewLab is local software; the only network traffic is what you choose to stream yourself.</p></details>
     </div>
   </section>
 
