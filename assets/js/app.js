@@ -821,3 +821,23 @@ if (burger && navLinks) {
     }).observe(cv);
   }
 })();
+
+/* Scroll-spy: highlight the nav link for the section in view. */
+(function () {
+  const sections = Array.from(document.querySelectorAll("main section[id]"));
+  const links = {};
+  document.querySelectorAll(".nav-links a").forEach((a) => {
+    const id = a.getAttribute("href")?.replace("#", "");
+    if (id && document.getElementById(id)) links[id] = a;
+  });
+  if (!sections.length || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting && links[en.target.id]) {
+        Object.values(links).forEach((l) => l.classList.remove("is-active"));
+        links[en.target.id].classList.add("is-active");
+      }
+    });
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  sections.forEach((s) => io.observe(s));
+})();
