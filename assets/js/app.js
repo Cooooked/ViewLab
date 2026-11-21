@@ -88,6 +88,8 @@
       hud: true, clock: true, note: true, cross: true,
       shift: true, spot: false, lfe: false,
     },
+    compare: false,
+    compareX: 0.5,
   };
 
   /* ---------- DOM wiring ---------- */
@@ -108,6 +110,13 @@
   bindRange("visorH", "visorHOut", pct, (v) => { state.visorH = v / 100; });
 
   $("visorOn").addEventListener("change", (e) => { state.visorOn = e.target.checked; render(); });
+
+  $("compareOn").addEventListener("change", (e) => {
+    state.compare = e.target.checked;
+    $("compareCtl").hidden = !state.compare;
+    render();
+  });
+  bindRange("compareX", "compareOut", pct, (v) => { state.compareX = v / 100; });
 
   document.querySelectorAll(".seg-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -593,6 +602,31 @@
     if (state.overlays.spot) drawSpotter(W, H, t);
     if (state.overlays.lfe) drawLfe(W, H, t);
     if (state.overlays.shift) drawShiftLight(W, H, t, dt);
+
+    // A/B compare: repaint the right of the divider with the unmodified frame
+    if (state.compare) {
+      const dx = state.compareX * W;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(dx, 0, W - dx, H);
+      ctx.clip();
+      ctx.clearRect(dx, 0, W - dx, H);
+      drawScene(W, H, t);
+      ctx.restore();
+      // divider + labels
+      ctx.save();
+      ctx.strokeStyle = "rgba(232,232,232,0.85)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 6]);
+      ctx.beginPath(); ctx.moveTo(dx, 0); ctx.lineTo(dx, H); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = "700 11px 'Cascadia Mono', Consolas, monospace";
+      ctx.fillStyle = "rgba(232,232,232,0.9)";
+      ctx.fillText("VIEWLAB", 14, 22);
+      const rawW = ctx.measureText("UNMODIFIED").width;
+      ctx.fillText("UNMODIFIED", W - rawW - 14, 22);
+      ctx.restore();
+    }
   }
 
   function frame(now) {
