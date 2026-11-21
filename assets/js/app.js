@@ -841,3 +841,24 @@ if (burger && navLinks) {
   }, { rootMargin: "-30% 0px -60% 0px" });
   sections.forEach((s) => io.observe(s));
 })();
+
+/* Profile cards — download a JSON preset file. */
+document.querySelectorAll(".profile-dl").forEach((dl) => {
+  dl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const name = dl.dataset.dl;
+    const presets = {
+      iracing: { name: "iRacing · 144 Hz", render: { mode: "total", height_pct: 55 }, visor: { enabled: true, width_pct: 74, height_pct: 62 }, overlays: ["hud", "note", "crosshair", "shift", "spotter"] },
+      flight:  { name: "Flight sim", render: { mode: "total", height_pct: 88 }, visor: { enabled: false }, overlays: ["hud", "clock"] },
+      cinema:  { name: "Cinematic", render: { mode: "total", height_pct: 100 }, visor: { enabled: true, width_pct: 96, height_pct: 88 }, overlays: ["clock"] },
+    };
+    const p = presets[name];
+    if (!p) return;
+    const blob = new Blob([JSON.stringify(p, null, 2) + "\n"], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "viewlab-profile-" + name.split(" ")[0].toLowerCase() + ".json";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+  });
+});
