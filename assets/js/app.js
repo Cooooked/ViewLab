@@ -771,6 +771,14 @@ if (burger && navLinks) {
     }
   }
 
+  var restartBtn = document.getElementById("slRestart");
+  if (restartBtn) restartBtn.addEventListener("click", resetGame);
+  function resetGame() {
+    notes = []; score = 0; combo = 0; spawn = 0.8;
+    scoreEl.textContent = "0"; comboEl.textContent = "×0 combo";
+    verdictEl.classList.remove("show");
+    for (let i = 0; i < 3; i++) spawnNote();
+  }
   function spawnNote() {
     // patterns: mostly singles, occasional doubles/chords
     const lane = Math.floor(Math.random() * LANES);
@@ -860,6 +868,8 @@ if (burger && navLinks) {
   }
   // input: keys + click/tap lanes
   document.addEventListener("keydown", (e) => {
+    const t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
     const k = e.key.toLowerCase();
     if (k in KEYS) press(KEYS[k]);
   });

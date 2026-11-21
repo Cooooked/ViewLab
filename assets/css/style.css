@@ -394,3 +394,5 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 
 .profile-import{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap}
 #profileImportMsg{font-size:12px;color:var(--accent,#ff5a4e)}
+.sl-restart{font:600 10px 'Cascadia Mono',Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);background:none;border:1px solid rgba(255,255,255,.14);border-radius:6px;padding:6px 10px;cursor:pointer;margin-left:10px}
+.sl-restart:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
