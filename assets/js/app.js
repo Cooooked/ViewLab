@@ -870,3 +870,21 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
   });
 });
+
+/* In-headset menu mock — click rows to cycle values (illustrates live apply). */
+(function () {
+  "use strict";
+  var rows = document.querySelectorAll(".menu-mock .menu-row[data-opt]");
+  rows.forEach(function (row) {
+    row.addEventListener("click", function () {
+      var opts = row.dataset.opt.split("|");
+      var labels = row.dataset.labels ? row.dataset.labels.split("|") : opts;
+      var idx = (parseInt(row.dataset.idx, 10) || 0);
+      idx = (idx + 1) % opts.length;
+      row.dataset.idx = String(idx);
+      row.querySelector("b").textContent = labels[idx];
+      row.classList.add("is-flash");
+      setTimeout(function () { row.classList.remove("is-flash"); }, 450);
+    });
+  });
+})();
