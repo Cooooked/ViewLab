@@ -398,3 +398,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 .sl-restart:hover{color:var(--ink);border-color:rgba(255,255,255,.35)}
 button.menu-row{width:100%;background:none;border:1px solid transparent;text-align:left;font-family:inherit;color:inherit;appearance:none}
 button.menu-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* global keyboard focus fallback */
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
