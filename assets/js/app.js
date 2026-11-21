@@ -1143,7 +1143,7 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     if (nt) { nt.value = "FUEL — 2 LAPS · TYRES GRINNING · BOX BOX"; nt.dispatchEvent(new Event("input", { bubbles: true })); }
     var nth = document.getElementById("noteTheme");
     if (nth) { nth.value = "paper"; nth.dispatchEvent(new Event("change", { bubbles: true })); }
-    document.querySelectorAll(".preset").forEach((b) => b.classList.remove("is-active"));
+    document.querySelectorAll(".preset").forEach((b) => { b.classList.remove("is-active"); b.setAttribute("aria-pressed", "false"); });
     btn.classList.add("is-done"); btn.textContent = "Bench reset";
     setTimeout(() => { btn.classList.remove("is-done"); btn.textContent = "Reset bench to defaults"; }, 1400);
   });
