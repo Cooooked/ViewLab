@@ -714,7 +714,12 @@ document.querySelectorAll(".profile-card").forEach((card) => {
   const main = card.querySelector(".profile-card-main");
   if (main) main.addEventListener("click", () => {
     const preset = card.dataset.preset;
-    document.querySelectorAll(".profile-card").forEach((c) => c.classList.toggle("is-active", c === card));
+    document.querySelectorAll(".profile-card").forEach((c) => {
+      var on = c === card;
+      c.classList.toggle("is-active", on);
+      var m = c.querySelector(".profile-card-main");
+      if (m) m.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     const btn = document.querySelector(`.preset[data-preset="${preset}"]`);
     if (btn) btn.click();
     document.getElementById("bench").scrollIntoView({ behavior: "smooth", block: "nearest" });
