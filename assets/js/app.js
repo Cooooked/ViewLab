@@ -92,6 +92,7 @@
     compareX: 0.5,
     sat: 1, con: 1,
     noteText: "FUEL — 2 LAPS · TYRES GRINNING · BOX BOX",
+    noteTheme: "paper",
   };
 
   /* ---------- DOM wiring ---------- */
@@ -146,6 +147,10 @@
 
   $("noteText").addEventListener("input", (e) => {
     state.noteText = e.target.value;
+    render();
+  });
+  $("noteTheme").addEventListener("change", (e) => {
+    state.noteTheme = e.target.value;
     render();
   });
   $("noteTextCtl").hidden = !state.overlays.note;
@@ -361,14 +366,21 @@
     const w = 190, h = 92, x = 18, y = H - h - 18;
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2); ctx.rotate(-0.035);
-    ctx.fillStyle = "#EDE8D8";
+    const themes = {
+      paper: { bg: "#EDE8D8", edge: "#C9C2AC", dim: "#8A8271", ink: "#4A463C" },
+      hd:    { bg: "#F4F1E6", edge: "#D8D2BC", dim: "#7A7462", ink: "#33302A" },
+      dark:  { bg: "#1B1D22", edge: "#3A3D45", dim: "#8A8F9C", ink: "#D8DAE0" },
+      neon:  { bg: "#101418", edge: "#39FF88", dim: "#39FF88", ink: "#E8FFF0" },
+    };
+    const th = themes[state.noteTheme] || themes.paper;
+    ctx.fillStyle = th.bg;
     roundedRect(-w / 2, -h / 2, w, h, 3); ctx.fill();
-    ctx.strokeStyle = "#C9C2AC"; ctx.lineWidth = 1;
+    ctx.strokeStyle = th.edge; ctx.lineWidth = state.noteTheme === "neon" ? 1.5 : 1;
     roundedRect(-w / 2, -h / 2, w, h, 3); ctx.stroke();
-    ctx.fillStyle = "#8A8271";
+    ctx.fillStyle = th.dim;
     ctx.font = "600 10px 'Segoe UI', sans-serif";
     ctx.fillText("STICKY NOTE", -w / 2 + 12, -h / 2 + 18);
-    ctx.fillStyle = "#4A463C";
+    ctx.fillStyle = th.ink;
     ctx.font = "13px 'Segoe UI', sans-serif";
     const parts = (state.noteText || "").split("·").map((p) => p.trim()).filter(Boolean);
     const lines = (parts.length ? parts : ["—"]).slice(0, 3);
@@ -943,6 +955,8 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     document.querySelector('.seg-btn[data-mode="total"]').click();
     var nt = document.getElementById("noteText");
     if (nt) { nt.value = "FUEL — 2 LAPS · TYRES GRINNING · BOX BOX"; nt.dispatchEvent(new Event("input", { bubbles: true })); }
+    var nth = document.getElementById("noteTheme");
+    if (nth) { nth.value = "paper"; nth.dispatchEvent(new Event("change", { bubbles: true })); }
     document.querySelectorAll(".preset").forEach((b) => b.classList.remove("is-active"));
     btn.classList.add("is-done"); btn.textContent = "Bench reset";
     setTimeout(() => { btn.classList.remove("is-done"); btn.textContent = "Reset bench to defaults"; }, 1400);
