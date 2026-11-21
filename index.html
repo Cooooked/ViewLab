@@ -121,6 +121,13 @@
             </label>
           </div>
           <p class="ctl-note" id="savingsNote">≈38% fewer shaded pixels (approx.)</p>
+          <div class="ctl-block">
+            <p class="ctl-block-title">Colour grade</p>
+            <label class="ctl"><span class="ctl-label">Saturation <output id="satOut">100%</output></span>
+              <input type="range" id="sat" min="0" max="200" value="100" step="5"></label>
+            <label class="ctl"><span class="ctl-label">Contrast <output id="conOut">100%</output></span>
+              <input type="range" id="con" min="50" max="150" value="100" step="5"></label>
+          </div>
           <label class="ctl check"><input type="checkbox" id="compareOn"><span>Compare with unmodified frame</span></label>
           <label class="ctl" id="compareCtl" hidden>
             <span class="ctl-label">Divider <output id="compareOut">50%</output></span>

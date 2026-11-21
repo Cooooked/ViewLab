@@ -343,3 +343,7 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 .sl-verdict.show{opacity:1}
 .sl-verdict.perfect{color:#3DD68C}.sl-verdict.good{color:#7FB3E8}.sl-verdict.miss{color:var(--accent)}
 .shiftlab-hint{margin:0;padding:10px 20px 14px;font-size:11px;color:var(--faint)}
+
+/* bench grade block */
+.ctl-block{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.ctl-block-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 10px}

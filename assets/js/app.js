@@ -90,6 +90,7 @@
     },
     compare: false,
     compareX: 0.5,
+    sat: 1, con: 1,
   };
 
   /* ---------- DOM wiring ---------- */
@@ -117,6 +118,8 @@
     render();
   });
   bindRange("compareX", "compareOut", pct, (v) => { state.compareX = v / 100; });
+  bindRange("sat", "satOut", pct, (v) => { state.sat = v / 100; });
+  bindRange("con", "conOut", pct, (v) => { state.con = v / 100; });
 
   document.querySelectorAll(".seg-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -532,7 +535,10 @@
     const dt = Math.min(0.05, t - (last || t)); last = t;
 
     ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.filter = `saturate(${state.sat}) contrast(${state.con})`;
     drawScene(W, H, t);
+    ctx.restore();
 
     // render slice: dim what's not rendered
     const band = sliceBand(W, H);
