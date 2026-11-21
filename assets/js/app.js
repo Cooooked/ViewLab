@@ -1159,8 +1159,8 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
   var zTop = 2;
   scene.querySelectorAll(".p-panel").forEach(function (p) {
     p.addEventListener("click", function () {
-      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); });
-      p.classList.add("is-sel");
+      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); o.setAttribute("aria-pressed", "false"); });
+      p.classList.add("is-sel"); p.setAttribute("aria-pressed", "true");
       p.style.zIndex = ++zTop;
       hint.textContent = "Selected: " + p.querySelector("span").textContent +
         " — in VR you drag it with the mouse and scroll to resize.";
@@ -1169,7 +1169,7 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
   // layout switch resets selection + hint
   document.querySelectorAll(".pl-btn").forEach(function (b) {
     b.addEventListener("click", function () {
-      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); o.style.zIndex = ""; });
+      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); o.setAttribute("aria-pressed", "false"); o.style.zIndex = ""; });
       hint.textContent = baseHint;
     });
   });
