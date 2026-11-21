@@ -211,24 +211,30 @@
       </p>
     </div>
     <div class="profile-grid">
-      <button class="profile-card is-active" data-preset="iracing" type="button">
-        <span class="profile-name">iRacing · 144 Hz</span>
-        <span class="profile-chips"><i>total crop</i><i>visor 74×62</i><i>HUD · note · crosshair · shift · spotter</i></span>
-        <span class="profile-cta">Load on bench →</span>
-        <span class="profile-dl" data-dl="iracing">download .json</span>
-      </button>
-      <button class="profile-card" data-preset="flight" type="button">
-        <span class="profile-name">Flight sim</span>
-        <span class="profile-chips"><i>wide render</i><i>visor off</i><i>HUD · clock</i></span>
-        <span class="profile-cta">Load on bench →</span>
-        <span class="profile-dl" data-dl="flight">download .json</span>
-      </button>
-      <button class="profile-card" data-preset="cinema" type="button">
-        <span class="profile-name">Cinematic</span>
-        <span class="profile-chips"><i>full frame</i><i>theatre visor</i><i>clock only</i></span>
-        <span class="profile-cta">Load on bench →</span>
-        <span class="profile-dl" data-dl="cinema">download .json</span>
-      </button>
+      <div class="profile-card" data-preset="iracing">
+        <button class="profile-card-main" type="button">
+          <span class="profile-name">iRacing · 144 Hz</span>
+          <span class="profile-chips"><i>total crop</i><i>visor 74×62</i><i>HUD · note · crosshair · shift · spotter</i></span>
+          <span class="profile-cta">Load on bench →</span>
+        </button>
+        <button class="profile-dl" data-dl="iracing" type="button">download .json</button>
+      </div>
+      <div class="profile-card" data-preset="flight">
+        <button class="profile-card-main" type="button">
+          <span class="profile-name">Flight sim</span>
+          <span class="profile-chips"><i>wide render</i><i>visor off</i><i>HUD · clock</i></span>
+          <span class="profile-cta">Load on bench →</span>
+        </button>
+        <button class="profile-dl" data-dl="flight" type="button">download .json</button>
+      </div>
+      <div class="profile-card" data-preset="cinema">
+        <button class="profile-card-main" type="button">
+          <span class="profile-name">Cinematic</span>
+          <span class="profile-chips"><i>full frame</i><i>theatre visor</i><i>clock only</i></span>
+          <span class="profile-cta">Load on bench →</span>
+        </button>
+        <button class="profile-dl" data-dl="cinema" type="button">download .json</button>
+      </div>
     </div>
     <div class="profile-import">
       <input type="file" id="profileFile" accept=".json,application/json" hidden>
