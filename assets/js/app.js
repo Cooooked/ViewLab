@@ -730,11 +730,18 @@ if (burger && navLinks) {
     burger.classList.toggle("open", open);
     burger.setAttribute("aria-expanded", open);
   });
+  const closeNav = () => {
+    navLinks.classList.remove("open");
+    burger.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+  };
   navLinks.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
-      navLinks.classList.remove("open");
-      burger.classList.remove("open");
-      burger.setAttribute("aria-expanded", "false");
+    if (e.target.tagName === "A") closeNav();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navLinks.classList.contains("open")) {
+      closeNav();
+      burger.focus();
     }
   });
 }
