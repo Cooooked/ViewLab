@@ -936,6 +936,7 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     chk("visorOn", true); chk("compareOn", false); chk("compareCtl", false);
     chk("ovHud", true); chk("ovClock", true); chk("ovNote", true); chk("ovCross", true);
     chk("ovShift", true); chk("ovSpot", false); chk("ovLfe", false);
+    document.querySelector('.seg-btn[data-mode="total"]').click();
     var nt = document.getElementById("noteText");
     if (nt) { nt.value = "FUEL — 2 LAPS · TYRES GRINNING · BOX BOX"; nt.dispatchEvent(new Event("input", { bubbles: true })); }
     document.querySelectorAll(".preset").forEach((b) => b.classList.remove("is-active"));
