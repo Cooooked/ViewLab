@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ViewLab — shape what your VR headset renders</title>
-<meta name="description" content="ViewLab is a Windows OpenXR layer and settings app that tunes render resolution, draws a visor into the game's eye textures, and puts a full overlay suite — HUDs, racing cues, VR panels, sticky notes — inside your headset.">
+<meta name="description" content="ViewLab is a Windows VR companion app that tunes render resolution, draws a visor into the game's eye textures, and puts a full overlay suite — HUDs, racing cues, VR panels, sticky notes — inside your headset.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ViewLab — shape what your VR headset renders">
-<meta property="og:description" content="Render tuning, a visor mask, in-headset overlays, native VR panels and racing cues — all from one OpenXR layer.">
+<meta property="og:description" content="Render tuning, a visor mask, in-headset overlays, native VR panels and racing cues — in one install.">
 <meta property="og:url" content="https://cooooked.github.io/ViewLab/">
 <meta property="og:image" content="https://cooooked.github.io/ViewLab/assets/img/og-card.png">
 <meta name="theme-color" content="#0A0B0D">
@@ -46,7 +46,7 @@
       <img class="hero-logo" src="assets/img/viewlab-logo-450x76.png" alt="ViewLab" width="450" height="76">
       <p class="hero-tag">Your headset renders less. You see more.</p>
       <p class="hero-sub">
-        ViewLab is a Windows OpenXR layer and settings app. It asks games to render a smaller,
+        ViewLab is a Windows VR companion app. It asks games to render a smaller,
         deliberate slice of the frame — then draws a visor, HUDs, racing cues and live panels
         into what you actually see. Every part of it is yours to tune, per game.
       </p>
@@ -55,7 +55,7 @@
         <a class="btn btn-ghost" href="https://github.com/Cooooked/xr-viewlab/releases" rel="noopener">Get the MSI</a>
       </div>
       <ul class="hero-facts" aria-label="Key facts">
-        <li>Windows · OpenXR</li>
+        <li>Windows · VR runtime</li>
         <li>Per-application profiles</li>
         <li>Zero-cost visor mask</li>
         <li>Built for 144 Hz+</li>
@@ -160,7 +160,7 @@
       <p class="kicker">Render tuning</p>
       <h2>Ask for less frame. Keep the view you want.</h2>
       <p class="lede">
-        ViewLab changes the FOV and render resolution reported through OpenXR — before the game
+        ViewLab changes the FOV and render resolution a game sees — before the game
         draws, not after. In compatible titles that means real GPU savings, not a post-process crop.
       </p>
     </div>
@@ -190,12 +190,12 @@
       <h2>An overlay suite that lives in the frame</h2>
       <p class="lede">
         Everything below is drawn into the submitted frame itself — visible in the headset and in
-        ViewLab's own OBS capture. Each element can be shown, hidden, moved and tuned independently.
+        ViewLab's own capture source. Each element can be shown, hidden, moved and tuned independently.
       </p>
     </div>
     <div class="card-grid cols-3">
       <article class="card"><h3>Performance HUD &amp; trace</h3><p>GPU, CPU, frametime and app metrics with alarm thresholds, plus a session graph browser for diagnosing stutter after the fact.</p></article>
-      <article class="card"><h3>Clock &amp; session timer</h3><p>Multiple clock modes and an OpenXR session timer, positionable anywhere in view.</p></article>
+      <article class="card"><h3>Clock &amp; session timer</h3><p>Multiple clock modes and a session timer, positionable anywhere in view.</p></article>
       <article class="card"><h3>Notifications</h3><p>Desktop notifications and music track-change cards surface inside the headset without breaking flow.</p></article>
       <article class="card"><h3>Sticky notes</h3><p>Draggable notes in several visual themes — including an HD paper style — for fuel, tyre and strategy reminders on track.</p></article>
       <article class="card"><h3>Colour grade &amp; profiles</h3><p>A post-processing grade with saturation, contrast, shadow and highlight controls, plus three always-available colour profiles switched from an in-headset menu.</p></article>
@@ -243,15 +243,22 @@
       <p class="kicker">Out of the headset</p>
       <h2>Capture what your audience should see</h2>
       <p class="lede">
-        ViewLab Media Capture is its own OBS source. Because the layer sees the finished frame,
-        the capture includes the scene, ViewLab's overlays, ReShade, and overlay layers submitted
-        above it — the complete picture, not a mirror of the raw eye buffer.
+        ViewLab Media Capture is its own capture source. Because it sees the finished frame,
+        the capture includes the scene, ViewLab's overlays, post-processing effects like ReShade, and your VR panels —
+        the complete picture, not a flat mirror of a single eye.
       </p>
     </div>
+    <div class="flow-strip reveal" aria-label="Capture pipeline">
+      <span class="flow-node">Game scene</span><i class="flow-arrow">→</i>
+      <span class="flow-node">ViewLab overlays</span><i class="flow-arrow">→</i>
+      <span class="flow-node">Post-FX</span><i class="flow-arrow">→</i>
+      <span class="flow-node accent">Media Capture</span><i class="flow-arrow">→</i>
+      <span class="flow-node">Stream / record</span>
+    </div>
     <div class="card-grid cols-3">
-      <article class="card"><h3>Media Capture source</h3><p>Eye selection, overlay-layer toggle, four crop sliders and reinitialize — stream or record exactly what the headset shows.</p></article>
-      <article class="card"><h3>Enhancer &amp; Stabilizer</h3><p>Two companion OBS filters installed from the app: image adjustment (sharpness, saturation, contrast, gamma) and motion stabilization built on LiveVisionKit.</p></article>
-      <article class="card"><h3>ReShade, remotely</h3><p>A bundled ReShade OpenXR payload with an in-app ReShade Remote popout — adjust shaders without leaving VR.</p></article>
+      <article class="card"><h3>Media Capture source</h3><p>Eye selection, overlay toggle, four crop sliders and reinitialize — stream or record exactly what the headset shows.</p></article>
+      <article class="card"><h3>Enhancer &amp; Stabilizer</h3><p>Companion capture filters installed from the app: image adjustment (sharpness, saturation, contrast, gamma) and motion stabilization.</p></article>
+      <article class="card"><h3>ReShade, remotely</h3><p>Bundled ReShade support with an in-app control popout — adjust shaders without leaving VR.</p></article>
     </div>
   </section>
 
