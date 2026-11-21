@@ -621,3 +621,21 @@ document.querySelectorAll(".profile-card").forEach((card) => {
     document.getElementById("bench").scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
 });
+
+/* Mobile nav toggle */
+const burger = document.getElementById("navBurger");
+const navLinks = document.getElementById("navLinks");
+if (burger && navLinks) {
+  burger.addEventListener("click", () => {
+    const open = navLinks.classList.toggle("open");
+    burger.classList.toggle("open", open);
+    burger.setAttribute("aria-expanded", open);
+  });
+  navLinks.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") {
+      navLinks.classList.remove("open");
+      burger.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+    }
+  });
+}
