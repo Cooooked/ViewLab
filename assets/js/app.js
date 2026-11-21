@@ -971,6 +971,16 @@ if (burger && navLinks) {
   draw();
 })();
 
+/* Back-to-top */
+(function () {
+  const btn = document.getElementById("toTop");
+  if (!btn) return;
+  const onScroll = () => btn.classList.toggle("show", window.scrollY > 700);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+})();
+
 /* Scroll-spy: highlight the nav link for the section in view. */
 (function () {
   const sections = Array.from(document.querySelectorAll("main section[id]"));

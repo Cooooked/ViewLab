@@ -413,3 +413,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 #capCanvas{width:100%;height:auto;border-radius:8px;border:1px solid var(--border-strong);background:#000}
 .capture-sliders{display:flex;flex-direction:column;gap:10px}
 @media (max-width:760px){.capture-demo-body{grid-template-columns:1fr}}
+
+/* back-to-top */
+.to-top{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;background:var(--bg-soft);border:1px solid var(--border-strong);color:var(--ink);font-size:18px;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{border-color:var(--accent);color:var(--accent)}
+@media (prefers-reduced-motion: reduce){.to-top{transition:none}}
