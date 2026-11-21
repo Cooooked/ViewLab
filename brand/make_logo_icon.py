@@ -30,7 +30,7 @@ bbox = a.getbbox()
 icon_c = icon.crop(bbox)
 # embed at 192px tall for crispness
 icon_e = icon_c.copy()
-icon_e.thumbnail((320, 320), Image.LANCZOS)
+icon_e.thumbnail((1024, 1024), Image.LANCZOS)
 buf = io.BytesIO()
 icon_e.save(buf, "PNG")
 ICON_B64 = base64.b64encode(buf.getvalue()).decode()
@@ -102,7 +102,7 @@ def png_b64(im):
     return base64.b64encode(b.getvalue()).decode()
 
 fav_icon = icon_c.copy()
-fav_icon.thumbnail((200, 200), Image.LANCZOS)
+fav_icon.thumbnail((512, 512), Image.LANCZOS)
 fiw = fav_icon.size[0] / fav_icon.size[1]
 # fit inside 60px box preserving aspect
 fh = 56.0
