@@ -673,3 +673,21 @@ if (burger && navLinks) {
     }
   });
 }
+
+/* Panel layout preview — named arrangements animate panels into place. */
+(function () {
+  const scene = document.getElementById("panelScene");
+  if (!scene) return;
+  const btns = document.querySelectorAll(".pl-btn");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  btns.forEach((b) => b.addEventListener("click", () => {
+    btns.forEach((x) => x.classList.toggle("is-active", x === b));
+    scene.dataset.layout = b.dataset.layout;
+    if (reduce) {
+      scene.querySelectorAll(".p-panel").forEach((p) => {
+        p.style.transition = "none";
+        setTimeout(() => { p.style.transition = ""; }, 50);
+      });
+    }
+  }));
+})();

@@ -254,6 +254,23 @@
         edit them with a mouse without taking the headset off.
       </p>
     </div>
+    <div class="panel-stage reveal" aria-label="Interactive panel layout preview">
+      <div class="panel-toolbar">
+        <span class="panel-toolbar-label">Layout</span>
+        <div class="panel-layouts" role="group" aria-label="Panel layouts">
+          <button class="pl-btn is-active" data-layout="race" type="button">Race</button>
+          <button class="pl-btn" data-layout="flight" type="button">Flight</button>
+          <button class="pl-btn" data-layout="desktop" type="button">Desktop</button>
+        </div>
+      </div>
+      <div class="panel-scene" id="panelScene">
+        <div class="p-panel" data-p="hud" style="--x:4%;--y:6%;--w:30%;--h:20%"><span>Telemetry HUD</span></div>
+        <div class="p-panel" data-p="map" style="--x:70%;--y:4%;--w:26%;--h:30%"><span>Track map</span></div>
+        <div class="p-panel" data-p="mon" style="--x:6%;--y:64%;--w:44%;--h:30%"><span>Monitor 1</span></div>
+        <div class="p-panel" data-p="chat" style="--x:60%;--y:58%;--w:34%;--h:34%"><span>Chat / notes</span></div>
+      </div>
+      <p class="panel-hint">Illustrative layout — named arrangements snap panels into place; in VR you drag them with the mouse.</p>
+    </div>
     <div class="card-grid cols-2">
       <article class="card"><h3>Real sources, real pixels</h3><p>Panels capture the actual desktop output at a paced frame rate and only re-render when pixels change — static content costs nothing. Failed captures retry; resized sources recover.</p></article>
       <article class="card"><h3>Layouts and placement</h3><p>Named panel layouts with fixed or head-following placement, configurable mouse editing, and in-VR guidance for selection. Import read-only window sources from tools like OpenKneeboard.</p></article>
