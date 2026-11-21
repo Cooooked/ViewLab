@@ -292,6 +292,17 @@
       <article class="card"><h3>Shift lights</h3><p>Rhythm shift-light themes including a Guitar Hero–style highway that scores your shifts — PERFECT to MISS — with combos and star power.</p></article>
       <article class="card"><h3>Driving assistance</h3><p>A movable ABS / wheelspin / wheel-lock indicator group using real telemetry — binary ABS intervention plus wheelspin and lock estimates — with fades, thresholds and timed tests.</p></article>
     </div>
+    <div class="shiftlab reveal">
+      <div class="shiftlab-head">
+        <div><h3>Shift-light highway</h3><p class="shiftlab-sub">One of the rhythm themes — hit the notes as they cross the line. Keys D F J K or tap the lanes.</p></div>
+        <div class="shiftlab-score mono"><span id="slScore">0</span><small>score</small><span id="slCombo">×0 combo</span></div>
+      </div>
+      <div class="shiftlab-stage">
+        <canvas id="slCanvas" width="880" height="240" aria-label="Rhythm shift-light game: notes scroll toward a hit line"></canvas>
+        <div class="sl-verdict" id="slVerdict" aria-live="polite"></div>
+      </div>
+      <p class="shiftlab-hint mono">illustrative demo — the real theme reads your shift points from telemetry</p>
+    </div>
   </section>
 
   <!-- ============ CAPTURE ============ -->

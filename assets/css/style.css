@@ -327,3 +327,19 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 .panel-scene[data-layout="desktop"] .p-panel[data-p="mon"]{--x:3%;--y:8%;--w:62%;--h:80%}
 .panel-scene[data-layout="desktop"] .p-panel[data-p="chat"]{--x:3%;--y:72%;--w:40%;--h:0%;--h:auto;opacity:0;pointer-events:none}
 @media(max-width:640px){.panel-scene{height:300px}.p-panel span{font-size:9px}}
+
+/* ---------- shift-light highway demo ---------- */
+.shiftlab{margin-top:34px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-soft);overflow:hidden}
+.shiftlab-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 20px 10px;flex-wrap:wrap}
+.shiftlab-head h3{margin:0;font-size:17px}
+.shiftlab-sub{margin:6px 0 0;color:var(--muted);font-size:13px;max-width:520px}
+.shiftlab-score{font-family:var(--mono);text-align:right}
+.shiftlab-score span{display:block;font-size:22px;font-weight:700;color:var(--accent)}
+.shiftlab-score small{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.shiftlab-score #slCombo{font-size:12px;color:var(--muted)}
+.shiftlab-stage{position:relative}
+#slCanvas{width:100%;height:auto;display:block;cursor:pointer}
+.sl-verdict{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);font-family:var(--mono);font-weight:800;font-size:26px;letter-spacing:.08em;pointer-events:none;opacity:0;transition:opacity .15s}
+.sl-verdict.show{opacity:1}
+.sl-verdict.perfect{color:#3DD68C}.sl-verdict.good{color:#7FB3E8}.sl-verdict.miss{color:var(--accent)}
+.shiftlab-hint{margin:0;padding:10px 20px 14px;font-size:11px;color:var(--faint)}

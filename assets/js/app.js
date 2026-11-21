@@ -691,3 +691,127 @@ if (burger && navLinks) {
     }
   }));
 })();
+
+/* Shift-light highway — playable rhythm demo (illustration of the real theme). */
+(function () {
+  const cv = document.getElementById("slCanvas");
+  if (!cv || !cv.getContext) return;
+  const ctx = cv.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const W = 880, H = 240, LANES = 4, LANE_W = W / LANES;
+  const HIT_X = W * 0.82, SPEED = 260; // px/s
+  const COLORS = ["#3FA34D", "#C93A2E", "#3A6FC9", "#E0B53A"];
+  const KEYS = { d: 0, f: 1, j: 2, k: 3 };
+  let notes = [], score = 0, combo = 0, spawn = 0.8, raf = 0, last = 0, flash = null, flashT = 0;
+  const scoreEl = document.getElementById("slScore");
+  const comboEl = document.getElementById("slCombo");
+  const verdictEl = document.getElementById("slVerdict");
+
+  function spawnNote() {
+    // patterns: mostly singles, occasional doubles/chords
+    const lane = Math.floor(Math.random() * LANES);
+    notes.push({ lane, x: -30, hit: false, missed: false });
+    if (Math.random() < 0.22) {
+      const l2 = (lane + 1 + Math.floor(Math.random() * (LANES - 1))) % LANES;
+      notes.push({ lane: l2, x: -30, hit: false, missed: false });
+    }
+  }
+  function verdict(text, cls) {
+    verdictEl.textContent = text;
+    verdictEl.className = "sl-verdict show " + cls;
+    flashT = performance.now();
+  }
+  function press(lane) {
+    // find nearest unhit note in lane within window
+    let best = null, bd = 1e9;
+    notes.forEach((n) => {
+      if (n.lane !== lane || n.hit || n.missed) return;
+      const d = Math.abs(n.x - HIT_X);
+      if (d < bd) { bd = d; best = n; }
+    });
+    const win = SPEED * 0.14; // ~140ms window
+    if (best && bd < win) {
+      best.hit = true;
+      const perfect = bd < SPEED * 0.05;
+      combo++;
+      score += (perfect ? 300 : 100) * Math.min(combo, 8);
+      verdict(perfect ? "PERFECT" : "GOOD", perfect ? "perfect" : "good");
+    } else if (combo > 0) {
+      combo = 0; verdict("MISS", "miss");
+    }
+    scoreEl.textContent = score;
+    comboEl.textContent = "×" + combo + " combo";
+  }
+  function draw(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    ctx.clearRect(0, 0, W, H);
+    // lanes
+    for (let i = 0; i < LANES; i++) {
+      ctx.fillStyle = i % 2 ? "rgba(255,255,255,0.025)" : "rgba(255,255,255,0.05)";
+      ctx.fillRect(i * LANE_W, 0, LANE_W, H);
+      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.beginPath(); ctx.moveTo(i * LANE_W, 0); ctx.lineTo(i * LANE_W, H); ctx.stroke();
+    }
+    // hit line
+    ctx.strokeStyle = "rgba(232,232,232,0.5)"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(HIT_X, 10); ctx.lineTo(HIT_X, H - 10); ctx.stroke();
+    // receptors
+    for (let i = 0; i < LANES; i++) {
+      const cx = i * LANE_W + LANE_W / 2;
+      ctx.strokeStyle = COLORS[i]; ctx.lineWidth = 3;
+      ctx.strokeRect(cx - 26, H - 34, 52, 24);
+      ctx.fillStyle = COLORS[i] + "33";
+      ctx.fillRect(cx - 26, H - 34, 52, 24);
+      ctx.fillStyle = COLORS[i];
+      ctx.font = "700 11px Consolas, monospace"; ctx.textAlign = "center";
+      ctx.fillText(["D", "F", "J", "K"][i], cx, H - 17);
+    }
+    // notes
+    notes = notes.filter((n) => n.x < W + 40 && !n.missed);
+    notes.forEach((n) => {
+      const nx = n.x, ny = n.lane * (H / LANES) + (H / LANES) / 2;
+      const s = 18;
+      ctx.fillStyle = n.hit ? COLORS[n.lane] + "55" : COLORS[n.lane];
+      ctx.beginPath();
+      ctx.moveTo(nx, ny - s); ctx.lineTo(nx + s, ny); ctx.lineTo(nx, ny + s); ctx.lineTo(nx - s, ny);
+      ctx.closePath(); ctx.fill();
+      if (n.hit) { ctx.strokeStyle = COLORS[n.lane]; ctx.lineWidth = 2; ctx.stroke(); }
+    });
+    // spawn + move
+    spawn -= dt;
+    if (spawn <= 0) { spawnNote(); spawn = 0.55 + Math.random() * 0.5; }
+    notes.forEach((n) => { n.x += SPEED * dt; });
+    // miss detection
+    notes.forEach((n) => {
+      if (!n.hit && !n.missed && n.x - HIT_X > SPEED * 0.16) {
+        n.missed = true; combo = 0;
+        scoreEl.textContent = score; comboEl.textContent = "×0 combo";
+        verdict("MISS", "miss");
+      }
+    });
+    // fade verdict
+    if (performance.now() - flashT > 600) verdictEl.classList.remove("show");
+    raf = requestAnimationFrame(draw);
+  }
+  // input: keys + click/tap lanes
+  document.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (k in KEYS) press(KEYS[k]);
+  });
+  cv.addEventListener("pointerdown", (e) => {
+    const r = cv.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width * W;
+    press(Math.min(LANES - 1, Math.floor(x / LANE_W)));
+  });
+  if (reduce) { draw(performance.now()); cancelAnimationFrame(raf); }
+  else raf = requestAnimationFrame((n) => { last = n; draw(n); });
+  // pause offscreen
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((en) => {
+      en.forEach((e) => {
+        if (e.isIntersecting && !reduce) { last = performance.now(); raf = requestAnimationFrame(draw); }
+        else cancelAnimationFrame(raf);
+      });
+    }).observe(cv);
+  }
+})();
