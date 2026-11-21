@@ -375,3 +375,13 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 .bench-reset{width:100%;font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;transition:color .15s,border-color .15s}
 .bench-reset:hover{color:var(--text);border-color:var(--border-strong)}
 .bench-reset.is-done{color:#4a9e6b;border-color:#2c5a3a}
+
+/* capture flow — animated packets */
+.flow-strip{position:relative}
+.flow-arrow{position:relative;display:inline-block;width:2.2em;text-align:center;overflow:visible}
+.flow-arrow::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--accent);opacity:0;animation:flowPkt 2.4s linear infinite}
+.flow-arrow:nth-of-type(2)::after{animation-delay:.3s}
+.flow-arrow:nth-of-type(3)::after{animation-delay:.6s}
+.flow-arrow:nth-of-type(4)::after{animation-delay:.9s}
+@keyframes flowPkt{0%{left:-60%;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:160%;opacity:0}}
+@media (prefers-reduced-motion: reduce){.flow-arrow::after{animation:none;opacity:0}}
