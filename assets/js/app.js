@@ -720,6 +720,17 @@ if (burger && navLinks) {
   const scoreEl = document.getElementById("slScore");
   const comboEl = document.getElementById("slCombo");
   const verdictEl = document.getElementById("slVerdict");
+  const bestEl = document.getElementById("slBest");
+  let best = 0;
+  try { best = parseInt(localStorage.getItem("vl-shiftlab-best") || "0", 10) || 0; } catch (e) {}
+  if (bestEl) bestEl.textContent = "best " + best;
+  function saveBest() {
+    if (score > best) {
+      best = score;
+      try { localStorage.setItem("vl-shiftlab-best", String(best)); } catch (e) {}
+      if (bestEl) bestEl.textContent = "best " + best;
+    }
+  }
 
   function spawnNote() {
     // patterns: mostly singles, occasional doubles/chords
@@ -750,6 +761,7 @@ if (burger && navLinks) {
       combo++;
       score += (perfect ? 300 : 100) * Math.min(combo, 8);
       verdict(perfect ? "PERFECT" : "GOOD", perfect ? "perfect" : "good");
+      saveBest();
     } else if (combo > 0) {
       combo = 0; verdict("MISS", "miss");
     }
