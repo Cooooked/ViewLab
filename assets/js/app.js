@@ -91,6 +91,7 @@
     compare: false,
     compareX: 0.5,
     sat: 1, con: 1,
+    noteText: "FUEL — 2 LAPS · TYRES GRINNING · BOX BOX",
   };
 
   /* ---------- DOM wiring ---------- */
@@ -141,6 +142,15 @@
     else if (key === "spot") state.overlays.spot = e.target.checked;
     else if (key === "lfe") state.overlays.lfe = e.target.checked;
     render();
+  });
+
+  $("noteText").addEventListener("input", (e) => {
+    state.noteText = e.target.value;
+    render();
+  });
+  $("noteTextCtl").hidden = !state.overlays.note;
+  $("ovNote").addEventListener("change", (e) => {
+    $("noteTextCtl").hidden = !e.target.checked;
   });
 
   const presets = {
@@ -360,11 +370,9 @@
     ctx.fillText("STICKY NOTE", -w / 2 + 12, -h / 2 + 18);
     ctx.fillStyle = "#4A463C";
     ctx.font = "13px 'Segoe UI', sans-serif";
-    ctx.fillText("FUEL — 2 LAPS", -w / 2 + 12, -h / 2 + 40);
-    ctx.fillText("TYRES GRINNING", -w / 2 + 12, -h / 2 + 60);
-    ctx.fillStyle = "#8A8271";
-    ctx.font = "11px 'Segoe UI', sans-serif";
-    ctx.fillText("BOX BOX", -w / 2 + 12, -h / 2 + 78);
+    const parts = (state.noteText || "").split("·").map((p) => p.trim()).filter(Boolean);
+    const lines = (parts.length ? parts : ["—"]).slice(0, 3);
+    lines.forEach((ln, i) => ctx.fillText(ln.toUpperCase(), -w / 2 + 12, -h / 2 + 40 + i * 20));
     ctx.restore();
   }
 
