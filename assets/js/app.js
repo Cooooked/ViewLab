@@ -153,9 +153,10 @@
     state.noteTheme = e.target.value;
     render();
   });
-  $("noteTextCtl").hidden = !state.overlays.note;
+  var noteCtl2 = $("noteThemeCtl");
+  $("noteTextCtl").hidden = $("noteThemeCtl").hidden = !state.overlays.note;
   $("ovNote").addEventListener("change", (e) => {
-    $("noteTextCtl").hidden = !e.target.checked;
+    $("noteTextCtl").hidden = noteCtl2.hidden = !e.target.checked;
   });
 
   const presets = {
