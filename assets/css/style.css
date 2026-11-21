@@ -370,3 +370,8 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
 
 /* shiftlab best score */
 .sl-best{display:block;font-size:10px;color:var(--faint);letter-spacing:.08em;margin-top:4px}
+
+/* bench reset */
+.bench-reset{width:100%;font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;cursor:pointer;transition:color .15s,border-color .15s}
+.bench-reset:hover{color:var(--text);border-color:var(--border-strong)}
+.bench-reset.is-done{color:#4a9e6b;border-color:#2c5a3a}
