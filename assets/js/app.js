@@ -120,6 +120,28 @@
     render();
   });
   bindRange("compareX", "compareOut", pct, (v) => { state.compareX = v / 100; });
+
+  // drag the compare divider directly on the canvas
+  (function () {
+    let dragging = false;
+    const setFromX = (clientX) => {
+      const r = canvas.getBoundingClientRect();
+      const f = Math.min(0.85, Math.max(0.15, (clientX - r.left) / r.width));
+      const pctF = Math.round(f * 100);
+      const slider = $("compareX");
+      if (slider) { slider.value = pctF; slider.dispatchEvent(new Event("input", { bubbles: true })); }
+      state.compareX = pctF / 100;
+      render();
+    };
+    canvas.addEventListener("pointerdown", (e) => {
+      if (!state.compare) return;
+      dragging = true;
+      canvas.setPointerCapture(e.pointerId);
+      setFromX(e.clientX);
+    });
+    canvas.addEventListener("pointermove", (e) => { if (dragging) setFromX(e.clientX); });
+    ["pointerup", "pointercancel"].forEach((ev) => canvas.addEventListener(ev, () => { dragging = false; }));
+  })();
   bindRange("sat", "satOut", pct, (v) => { state.sat = v / 100; });
   bindRange("con", "conOut", pct, (v) => { state.con = v / 100; });
 
