@@ -384,6 +384,22 @@
       <span class="flow-node accent">Media Capture</span><i class="flow-arrow" aria-hidden="true">→</i>
       <span class="flow-node">Stream / record</span>
     </div>
+    <div class="capture-demo reveal">
+      <div class="capture-demo-head">
+        <h3>Try the crop</h3>
+        <p class="mono-dim" id="capOut">full frame · 1920×1080</p>
+      </div>
+      <div class="capture-demo-body">
+        <canvas id="capCanvas" width="480" height="270" aria-label="Simulated Media Capture output responding to crop sliders"></canvas>
+        <div class="capture-sliders">
+          <label class="ctl"><span class="ctl-label">Left <output id="capLOut">0%</output></span><input type="range" id="capL" min="0" max="30" value="0"></label>
+          <label class="ctl"><span class="ctl-label">Right <output id="capROut">0%</output></span><input type="range" id="capR" min="0" max="30" value="0"></label>
+          <label class="ctl"><span class="ctl-label">Top <output id="capTOut">0%</output></span><input type="range" id="capT" min="0" max="30" value="0"></label>
+          <label class="ctl"><span class="ctl-label">Bottom <output id="capBOut">0%</output></span><input type="range" id="capB" min="0" max="30" value="0"></label>
+        </div>
+      </div>
+      <p class="shiftlab-hint mono">illustrative demo — Media Capture crops the finished frame before it reaches the encoder</p>
+    </div>
     <div class="card-grid cols-3">
       <article class="card"><h3>Media Capture source</h3><p>Eye selection, overlay toggle, four crop sliders and reinitialize — stream or record exactly what the headset shows.</p></article>
       <article class="card"><h3>Enhancer &amp; Stabilizer</h3><p>Companion capture filters installed from the app: image adjustment (sharpness, saturation, contrast, gamma) and motion stabilization.</p></article>

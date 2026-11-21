@@ -404,3 +404,12 @@ button.menu-row:focus-visible{outline:2px solid var(--accent);outline-offset:2px
 a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px;
 }
+
+/* media capture crop demo */
+.capture-demo{background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin:26px 0}
+.capture-demo-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.capture-demo-head h3{margin:0;font-size:17px}
+.capture-demo-body{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
+#capCanvas{width:100%;height:auto;border-radius:8px;border:1px solid var(--border-strong);background:#000}
+.capture-sliders{display:flex;flex-direction:column;gap:10px}
+@media (max-width:760px){.capture-demo-body{grid-template-columns:1fr}}

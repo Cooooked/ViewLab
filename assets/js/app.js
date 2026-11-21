@@ -911,6 +911,66 @@ if (burger && navLinks) {
   }
 })();
 
+/* Media Capture crop demo — sliders crop a simulated finished frame. */
+(function () {
+  const cv = document.getElementById("capCanvas");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const W = cv.width, H = cv.height;
+  const ids = { l: "capL", r: "capR", t: "capT", b: "capB" };
+  const outs = { l: "capLOut", r: "capROut", t: "capTOut", b: "capBOut" };
+  const read = document.getElementById("capOut");
+  let crop = { l: 0, r: 0, t: 0, b: 0 };
+  function pct(id) { return document.getElementById(id).value + "%"; }
+  function draw() {
+    // full simulated scene
+    ctx.fillStyle = "#0d0f14"; ctx.fillRect(0, 0, W, H);
+    const g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#1a2233"); g.addColorStop(1, "#0a0c12");
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // track-ish curve + car blob + HUD-ish overlays (what capture would include)
+    ctx.strokeStyle = "rgba(232,232,232,.5)"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(0, H * .62);
+    ctx.bezierCurveTo(W * .3, H * .5, W * .7, H * .75, W, H * .55); ctx.stroke();
+    ctx.fillStyle = "#e8e8e8";
+    ctx.beginPath(); ctx.arc(W * .5, H * .58, 14, 0, 7); ctx.fill();
+    ctx.fillStyle = "rgba(255,90,78,.85)"; ctx.font = "700 13px Consolas,monospace";
+    ctx.fillText("VIEWLAB", 14, 24);
+    ctx.fillStyle = "rgba(232,232,232,.6)"; ctx.font = "11px Consolas,monospace";
+    ctx.fillText("SPD 212", 14, 42);
+    // crop: darken + border the cropped-away regions
+    const px = (v) => v / 100;
+    const rx = crop.l * px(1), rw = (100 - crop.l - crop.r) / 100 * W;
+    const ry = crop.t * px(1), rh = (100 - crop.t - crop.b) / 100 * H;
+    ctx.save();
+    ctx.fillStyle = "rgba(0,0,0,.72)";
+    if (crop.l) ctx.fillRect(0, 0, crop.l / 100 * W, H);
+    if (crop.r) ctx.fillRect(W - crop.r / 100 * W, 0, crop.r / 100 * W, H);
+    if (crop.t) ctx.fillRect(0, 0, W, crop.t / 100 * H);
+    if (crop.b) ctx.fillRect(0, H - crop.b / 100 * H, W, crop.b / 100 * H);
+    ctx.strokeStyle = "#ff5a4e"; ctx.lineWidth = 2; ctx.setLineDash([6, 4]);
+    ctx.strokeRect(rx, ry, rw, rh);
+    ctx.restore();
+    if (read) {
+      const ow = Math.round(1920 * (100 - crop.l - crop.r) / 100);
+      const oh = Math.round(1080 * (100 - crop.t - crop.b) / 100);
+      read.textContent = (crop.l || crop.r || crop.t || crop.b)
+        ? `cropped · ${ow}×${oh}` : "full frame · 1920×1080";
+    }
+  }
+  ["capL", "capR", "capT", "capB"].forEach((id) => {
+    const el = document.getElementById(id);
+    const o = document.getElementById(outs[id.slice(3).toLowerCase()]);
+    el.addEventListener("input", () => {
+      const k = id.slice(3).toLowerCase();
+      crop[k] = +el.value;
+      if (o) o.textContent = pct(id);
+      draw();
+    });
+  });
+  draw();
+})();
+
 /* Scroll-spy: highlight the nav link for the section in view. */
 (function () {
   const sections = Array.from(document.querySelectorAll("main section[id]"));
