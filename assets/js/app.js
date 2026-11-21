@@ -944,3 +944,29 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     setTimeout(() => { btn.classList.remove("is-done"); btn.textContent = "Reset bench to defaults"; }, 1400);
   });
 })();
+
+/* VR panel preview — click a panel to select it (mirrors in-VR selection). */
+(function () {
+  "use strict";
+  var scene = document.getElementById("panelScene");
+  var hint = document.getElementById("panelHint");
+  if (!scene || !hint) return;
+  var baseHint = hint.textContent;
+  var zTop = 2;
+  scene.querySelectorAll(".p-panel").forEach(function (p) {
+    p.addEventListener("click", function () {
+      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); });
+      p.classList.add("is-sel");
+      p.style.zIndex = ++zTop;
+      hint.textContent = "Selected: " + p.querySelector("span").textContent +
+        " — in VR you drag it with the mouse and scroll to resize.";
+    });
+  });
+  // layout switch resets selection + hint
+  document.querySelectorAll(".pl-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      scene.querySelectorAll(".p-panel").forEach(function (o) { o.classList.remove("is-sel"); o.style.zIndex = ""; });
+      hint.textContent = baseHint;
+    });
+  });
+})();
