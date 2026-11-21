@@ -1035,7 +1035,7 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
         const setPct = (id, outId, val) => {
           const el = document.getElementById(id), o = document.getElementById(outId);
           if (!el || val == null) return;
-          el.value = val; if (o) o.textContent = pct(val);
+          el.value = val; if (o) o.textContent = val + "%";
           el.dispatchEvent(new Event("input", { bubbles: true }));
         };
         if (r.height_pct != null) setPct("totalHeight", "totalOut", Math.round(r.height_pct));
