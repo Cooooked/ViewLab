@@ -133,7 +133,7 @@
               <input type="range" id="botTangent" min="0" max="50" value="15" step="1">
             </label>
           </div>
-          <p class="ctl-note" id="savingsNote">≈38% fewer shaded pixels (approx.)</p>
+          <p class="ctl-note" id="savingsNote" aria-live="polite">≈38% fewer shaded pixels (approx.)</p>
           <div class="ctl-block">
             <p class="ctl-block-title">Colour grade</p>
             <label class="ctl"><span class="ctl-label">Saturation <output id="satOut">100%</output></span>
@@ -332,7 +332,7 @@
     <div class="shiftlab reveal">
       <div class="shiftlab-head">
         <div><h3>Shift-light highway</h3><p class="shiftlab-sub">One of the rhythm themes — hit the notes as they cross the line. Keys D F J K or tap the lanes.</p></div>
-        <div class="shiftlab-score mono"><span id="slScore">0</span><small>score</small><span id="slCombo">×0 combo</span><span id="slBest" class="sl-best">best 0</span></div>
+        <div class="shiftlab-score mono" aria-live="polite"><span id="slScore">0</span><small>score</small><span id="slCombo">×0 combo</span><span id="slBest" class="sl-best">best 0</span></div>
       </div>
       <div class="shiftlab-stage">
         <canvas id="slCanvas" width="880" height="240" aria-label="Rhythm shift-light game: notes scroll toward a hit line"></canvas>
