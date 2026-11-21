@@ -1111,6 +1111,9 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
     } else if (k === "v" || k === "V") {
       var vis = document.getElementById("visorOn");
       if (vis) { vis.checked = !vis.checked; vis.dispatchEvent(new Event("change", { bubbles: true })); e.preventDefault(); }
+    } else if (k === "r" || k === "R") {
+      var rs = document.getElementById("benchReset");
+      if (rs) { rs.click(); e.preventDefault(); }
     }
   });
 })();
