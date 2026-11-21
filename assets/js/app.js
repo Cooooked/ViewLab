@@ -147,7 +147,11 @@
 
   document.querySelectorAll(".seg-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".seg-btn").forEach((b) => b.classList.toggle("is-active", b === btn));
+      document.querySelectorAll(".seg-btn").forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
       state.mode = btn.dataset.mode;
       $("totalControls").hidden = state.mode !== "total";
       $("splitControls").hidden = state.mode !== "split";
@@ -216,7 +220,10 @@
     render();
   }
   document.querySelectorAll(".preset").forEach((b) =>
-    b.addEventListener("click", () => applyPreset(b.dataset.preset)));
+    b.addEventListener("click", () => {
+      document.querySelectorAll(".preset").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      applyPreset(b.dataset.preset);
+    }));
   applyPreset("iracing");
 
   /* ---------- geometry helpers ---------- */
@@ -731,7 +738,11 @@ if (burger && navLinks) {
   const btns = document.querySelectorAll(".pl-btn");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   btns.forEach((b) => b.addEventListener("click", () => {
-    btns.forEach((x) => x.classList.toggle("is-active", x === b));
+    btns.forEach((x) => {
+      const on = x === b;
+      x.classList.toggle("is-active", on);
+      x.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     scene.dataset.layout = b.dataset.layout;
     // inline --x/--y/--w/--h would override the stylesheet layout — release them so the named arrangement applies
     scene.querySelectorAll(".p-panel").forEach((p) => {

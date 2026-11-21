@@ -108,17 +108,17 @@
         <div class="panel-block">
           <h3>Presets</h3>
           <div class="preset-row" role="group" aria-label="Presets">
-            <button class="preset" data-preset="iracing" type="button">iRacing · 144 Hz</button>
-            <button class="preset" data-preset="flight" type="button">Flight sim</button>
-            <button class="preset" data-preset="cinema" type="button">Cinematic</button>
+            <button class="preset is-active" data-preset="iracing" type="button" aria-pressed="true">iRacing · 144 Hz</button>
+            <button class="preset" data-preset="flight" type="button" aria-pressed="false">Flight sim</button>
+            <button class="preset" data-preset="cinema" type="button" aria-pressed="false">Cinematic</button>
           </div>
         </div>
 
         <div class="panel-block">
           <h3>Render slice</h3>
           <div class="seg" role="group" aria-label="Render mode">
-            <button class="seg-btn is-active" data-mode="total" type="button">Total</button>
-            <button class="seg-btn" data-mode="split" type="button">Split</button>
+            <button class="seg-btn is-active" data-mode="total" type="button" aria-pressed="true">Total</button>
+            <button class="seg-btn" data-mode="split" type="button" aria-pressed="false">Split</button>
           </div>
           <div id="totalControls">
             <label class="ctl">
@@ -319,9 +319,9 @@
       <div class="panel-toolbar">
         <span class="panel-toolbar-label">Layout</span>
         <div class="panel-layouts" role="group" aria-label="Panel layouts">
-          <button class="pl-btn is-active" data-layout="race" type="button">Race</button>
-          <button class="pl-btn" data-layout="flight" type="button">Flight</button>
-          <button class="pl-btn" data-layout="desktop" type="button">Desktop</button>
+          <button class="pl-btn is-active" data-layout="race" type="button" aria-pressed="true">Race</button>
+          <button class="pl-btn" data-layout="flight" type="button" aria-pressed="false">Flight</button>
+          <button class="pl-btn" data-layout="desktop" type="button" aria-pressed="false">Desktop</button>
         </div>
       </div>
       <div class="panel-scene" id="panelScene" data-layout="race">
