@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViewLab — shape what your VR headset renders</title>
+<meta name="description" content="ViewLab is a Windows OpenXR layer and settings app that tunes render resolution, draws a visor into the game's eye textures, and puts a full overlay suite — HUDs, racing cues, VR panels, sticky notes — inside your headset.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ViewLab — shape what your VR headset renders">
+<meta property="og:description" content="Render tuning, a visor mask, in-headset overlays, native VR panels and racing cues — all from one OpenXR layer.">
+<meta property="og:url" content="https://cooooked.github.io/ViewLab/">
+<meta property="og:image" content="https://cooooked.github.io/ViewLab/assets/img/og-card.png">
+<meta name="theme-color" content="#0A0B0D">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-nav" id="top">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="ViewLab home">
+      <img class="brand-logo" src="assets/img/viewlab-logo.svg" alt="ViewLab">
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#bench">The bench</a>
+      <a href="#render">Render tuning</a>
+      <a href="#overlays">Overlays</a>
+      <a href="#panels">VR panels</a>
+      <a href="#racing">Racing</a>
+      <a href="#capture">Capture</a>
+    </nav>
+    <a class="btn btn-ghost nav-cta" href="https://github.com/Cooooked/xr-viewlab" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <img class="hero-logo" src="assets/img/viewlab-logo-450x76.png" alt="ViewLab" width="450" height="76">
+      <p class="hero-tag">Your headset renders less. You see more.</p>
+      <p class="hero-sub">
+        ViewLab is a Windows OpenXR layer and settings app. It asks games to render a smaller,
+        deliberate slice of the frame — then draws a visor, HUDs, racing cues and live panels
+        into what you actually see. Every part of it is yours to tune, per game.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#bench">Try the interactive bench</a>
+        <a class="btn btn-ghost" href="https://github.com/Cooooked/xr-viewlab/releases" rel="noopener">Get the MSI</a>
+      </div>
+      <ul class="hero-facts" aria-label="Key facts">
+        <li>Windows · OpenXR</li>
+        <li>Per-application profiles</li>
+        <li>Zero-cost visor mask</li>
+        <li>Built for 144 Hz+</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ INTERACTIVE BENCH ============ -->
+  <section class="bench section" id="bench">
+    <div class="section-head">
+      <p class="kicker">Interactive</p>
+      <h2>The bench</h2>
+      <p class="lede">
+        This is a working model of what ViewLab does, running in your browser. Drag the controls
+        and watch the headset view respond — the render slice shrinks, the visor closes in,
+        overlays arrive. It is an illustration of the real controls, not a screenshot of the app.
+      </p>
+    </div>
+
+    <div class="bench-grid">
+      <div class="bench-stage">
+        <div class="viewport-frame">
+          <canvas id="viewport" width="960" height="600" aria-label="Simulated VR headset view demonstrating ViewLab render crop, visor mask and overlays"></canvas>
+          <p class="viewport-caption" id="viewportCaption">Illustrative simulation — not the actual application.</p>
+        </div>
+      </div>
+
+      <aside class="bench-panel" aria-label="ViewLab bench controls">
+        <div class="panel-block">
+          <h3>Presets</h3>
+          <div class="preset-row" role="group" aria-label="Presets">
+            <button class="preset" data-preset="iracing" type="button">iRacing · 144 Hz</button>
+            <button class="preset" data-preset="flight" type="button">Flight sim</button>
+            <button class="preset" data-preset="cinema" type="button">Cinematic</button>
+          </div>
+        </div>
+
+        <div class="panel-block">
+          <h3>Render slice</h3>
+          <div class="seg" role="group" aria-label="Render mode">
+            <button class="seg-btn is-active" data-mode="total" type="button">Total</button>
+            <button class="seg-btn" data-mode="split" type="button">Split</button>
+          </div>
+          <div id="totalControls">
+            <label class="ctl">
+              <span class="ctl-label">Render height <output id="totalOut">62%</output></span>
+              <input type="range" id="totalHeight" min="10" max="100" value="62" step="1">
+            </label>
+          </div>
+          <div id="splitControls" hidden>
+            <label class="ctl">
+              <span class="ctl-label">Top <output id="topOut">15%</output></span>
+              <input type="range" id="topTangent" min="0" max="50" value="15" step="1">
+            </label>
+            <label class="ctl">
+              <span class="ctl-label">Bottom <output id="botOut">15%</output></span>
+              <input type="range" id="botTangent" min="0" max="50" value="15" step="1">
+            </label>
+          </div>
+          <p class="ctl-note" id="savingsNote">≈38% fewer shaded pixels (approx.)</p>
+        </div>
+
+        <div class="panel-block">
+          <h3>Visor</h3>
+          <label class="ctl">
+            <span class="ctl-label">Aperture width <output id="visorWOut">78%</output></span>
+            <input type="range" id="visorW" min="40" max="100" value="78" step="1">
+          </label>
+          <label class="ctl">
+            <span class="ctl-label">Aperture height <output id="visorHOut">70%</output></span>
+            <input type="range" id="visorH" min="30" max="100" value="70" step="1">
+          </label>
+          <label class="ctl">
+            <span class="ctl-label">Visor mask</span>
+            <span class="switch-row">
+              <input type="checkbox" id="visorOn" checked>
+              <span class="switch" aria-hidden="true"></span>
+              <span class="switch-text">Draw visor into eye textures</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="panel-block">
+          <h3>In-headset overlays</h3>
+          <div class="overlay-toggles" id="overlayToggles">
+            <label class="ctl check"><input type="checkbox" id="ovHud" checked><span>Performance HUD</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovClock" checked><span>Clock</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovNote" checked><span>Sticky note</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovCross" checked><span>Crosshair</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovShift" checked><span>Shift light</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovSpot" ><span>Spotter glow</span></label>
+            <label class="ctl check"><input type="checkbox" id="ovLfe" ><span>LFE haze</span></label>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ RENDER TUNING ============ -->
+  <section class="section" id="render">
+    <div class="section-head">
+      <p class="kicker">Render tuning</p>
+      <h2>Ask for less frame. Keep the view you want.</h2>
+      <p class="lede">
+        ViewLab changes the FOV and render resolution reported through OpenXR — before the game
+        draws, not after. In compatible titles that means real GPU savings, not a post-process crop.
+      </p>
+    </div>
+    <div class="card-grid cols-3">
+      <article class="card">
+        <h3>Total or split</h3>
+        <p>One value centres the rendered slice; split mode takes separate top and bottom values,
+        so you can push the picture up, down, or asymmetric for your headset and posture.</p>
+      </article>
+      <article class="card">
+        <h3>The visor mask</h3>
+        <p>A black border drawn directly into the game's eye textures — aperture, apex, bridge and
+        curve all adjustable. It bounds what reaches your eyes at zero GPU cost.</p>
+      </article>
+      <article class="card">
+        <h3>Per-game profiles</h3>
+        <p>Global settings plus per-application overrides. A low narrow slice for iRacing, a centred
+        view for DCS or MSFS, a taller one for SkyrimVR — each remembered automatically.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <section class="section" id="overlays">
+    <div class="section-head">
+      <p class="kicker">Inside the headset</p>
+      <h2>An overlay suite that lives in the frame</h2>
+      <p class="lede">
+        Everything below is drawn into the submitted frame itself — visible in the headset and in
+        ViewLab's own OBS capture. Each element can be shown, hidden, moved and tuned independently.
+      </p>
+    </div>
+    <div class="card-grid cols-3">
+      <article class="card"><h3>Performance HUD &amp; trace</h3><p>GPU, CPU, frametime and app metrics with alarm thresholds, plus a session graph browser for diagnosing stutter after the fact.</p></article>
+      <article class="card"><h3>Clock &amp; session timer</h3><p>Multiple clock modes and an OpenXR session timer, positionable anywhere in view.</p></article>
+      <article class="card"><h3>Notifications</h3><p>Desktop notifications and music track-change cards surface inside the headset without breaking flow.</p></article>
+      <article class="card"><h3>Sticky notes</h3><p>Draggable notes in several visual themes — including an HD paper style — for fuel, tyre and strategy reminders on track.</p></article>
+      <article class="card"><h3>Colour grade &amp; profiles</h3><p>A post-processing grade with saturation, contrast, shadow and highlight controls, plus three always-available colour profiles switched from an in-headset menu.</p></article>
+      <article class="card"><h3>LFE spectrogram</h3><p>A subtle frequency haze driven by a real Windows audio endpoint — think gear-whine and kerb-frequency visualization around the periphery, with optional mirrored copies.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ VR PANELS ============ -->
+  <section class="section" id="panels">
+    <div class="section-head">
+      <p class="kicker">VR panels</p>
+      <h2>Any window. Any monitor. Inside your headset.</h2>
+      <p class="lede">
+        ViewLab can capture program windows — or an entire monitor — and present them as live panels
+        floating in VR. Arrange named layouts, pin them in space or let them follow your head, and
+        edit them with a mouse without taking the headset off.
+      </p>
+    </div>
+    <div class="card-grid cols-2">
+      <article class="card"><h3>Real sources, real pixels</h3><p>Panels capture the actual desktop output at a paced frame rate and only re-render when pixels change — static content costs nothing. Failed captures retry; resized sources recover.</p></article>
+      <article class="card"><h3>Layouts and placement</h3><p>Named panel layouts with fixed or head-following placement, configurable mouse editing, and in-VR guidance for selection. Import read-only window sources from tools like OpenKneeboard.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ RACING ============ -->
+  <section class="section" id="racing">
+    <div class="section-head">
+      <p class="kicker">Built by a racer</p>
+      <h2>Telemetry that earns its pixels</h2>
+      <p class="lede">
+        ViewLab's cue suite was designed around competitive sim racing — information you can
+        actually use at 180 km/h, not dashboard decoration.
+      </p>
+    </div>
+    <div class="card-grid cols-3">
+      <article class="card"><h3>iRacing cues</h3><p>Spotter glow with continuous proximity colour, flag borders, race-start lights, rear-closing pressure cues, grip bar and lap/fuel cards — each independently placeable and testable.</p></article>
+      <article class="card"><h3>Shift lights</h3><p>Rhythm shift-light themes including a Guitar Hero–style highway that scores your shifts — PERFECT to MISS — with combos and star power.</p></article>
+      <article class="card"><h3>Driving assistance</h3><p>A movable ABS / wheelspin / wheel-lock indicator group using real telemetry — binary ABS intervention plus wheelspin and lock estimates — with fades, thresholds and timed tests.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ CAPTURE ============ -->
+  <section class="section" id="capture">
+    <div class="section-head">
+      <p class="kicker">Out of the headset</p>
+      <h2>Capture what your audience should see</h2>
+      <p class="lede">
+        ViewLab Media Capture is its own OBS source. Because the layer sees the finished frame,
+        the capture includes the scene, ViewLab's overlays, ReShade, and overlay layers submitted
+        above it — the complete picture, not a mirror of the raw eye buffer.
+      </p>
+    </div>
+    <div class="card-grid cols-3">
+      <article class="card"><h3>Media Capture source</h3><p>Eye selection, overlay-layer toggle, four crop sliders and reinitialize — stream or record exactly what the headset shows.</p></article>
+      <article class="card"><h3>Enhancer &amp; Stabilizer</h3><p>Two companion OBS filters installed from the app: image adjustment (sharpness, saturation, contrast, gamma) and motion stabilization built on LiveVisionKit.</p></article>
+      <article class="card"><h3>ReShade, remotely</h3><p>A bundled ReShade OpenXR payload with an in-app ReShade Remote popout — adjust shaders without leaving VR.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="assets/img/viewlab-logo-450x76.png" alt="ViewLab" width="225" height="38">
+      <p class="footer-tag">ViewLab — shape what your VR headset renders.</p>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/Cooooked/xr-viewlab" rel="noopener">Source &amp; releases</a>
+        <a href="https://github.com/Cooooked/xr-viewlab/blob/dev/README.md" rel="noopener">Documentation</a>
+        <a href="https://github.com/Cooooked/xr-viewlab/blob/dev/CHANGELOG.md" rel="noopener">Changelog</a>
+      </nav>
+      <p class="footer-note">ViewLab is Windows software in active development. Screens shown on this page are illustrations; the interactive bench is a simplified demonstration of real controls.</p>
+    </div>
+  </footer>
+
+</main>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
