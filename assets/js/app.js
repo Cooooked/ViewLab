@@ -697,6 +697,10 @@ if (burger && navLinks) {
   btns.forEach((b) => b.addEventListener("click", () => {
     btns.forEach((x) => x.classList.toggle("is-active", x === b));
     scene.dataset.layout = b.dataset.layout;
+    // inline --x/--y/--w/--h would override the stylesheet layout — release them so the named arrangement applies
+    scene.querySelectorAll(".p-panel").forEach((p) => {
+      ["--x", "--y", "--w", "--h"].forEach((prop) => p.style.removeProperty(prop));
+    });
     if (reduce) {
       scene.querySelectorAll(".p-panel").forEach((p) => {
         p.style.transition = "none";
