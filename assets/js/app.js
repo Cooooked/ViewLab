@@ -213,10 +213,18 @@
     $("ovSpot").checked = state.overlays.spot;
     $("ovLfe").checked = state.overlays.lfe;
 
-    document.querySelectorAll(".seg-btn").forEach((b) => b.classList.toggle("is-active", b.dataset.mode === p.mode));
+    document.querySelectorAll(".seg-btn").forEach((b) => {
+      const on = b.dataset.mode === p.mode;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     $("totalControls").hidden = p.mode !== "total";
     $("splitControls").hidden = p.mode !== "split";
-    document.querySelectorAll(".preset").forEach((b) => b.classList.toggle("is-active", b.dataset.preset === name));
+    document.querySelectorAll(".preset").forEach((b) => {
+      const on = b.dataset.preset === name;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     render();
   }
   document.querySelectorAll(".preset").forEach((b) =>
