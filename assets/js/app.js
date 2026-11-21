@@ -1138,7 +1138,7 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
   btn.addEventListener("click", function () {
     var set = function (id, v) { var el = document.getElementById(id); if (el) { el.value = v; el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); } };
     var chk = function (id, v) { var el = document.getElementById(id); if (el) { el.checked = v; el.dispatchEvent(new Event("change", { bubbles: true })); } };
-    set("totalHeight", 62); set("visorW", 78); set("visorH", 70);
+    set("totalHeight", 62); set("visorW", 78); set("visorH", 70); set("topTangent", 15); set("botTangent", 15);
     set("sat", 100); set("con", 100); set("compareX", 50);
     chk("visorOn", true); chk("compareOn", false); chk("compareCtl", false);
     chk("ovHud", true); chk("ovClock", true); chk("ovNote", true); chk("ovCross", true);
