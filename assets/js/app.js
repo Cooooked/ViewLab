@@ -922,6 +922,51 @@ document.querySelectorAll(".profile-dl").forEach((dl) => {
   });
 });
 
+/* Profile import — load a previously exported .json preset onto the bench. */
+(function () {
+  const btn = document.getElementById("profileImportBtn");
+  const file = document.getElementById("profileFile");
+  const msg = document.getElementById("profileImportMsg");
+  if (!btn || !file) return;
+  btn.addEventListener("click", () => file.click());
+  file.addEventListener("change", () => {
+    const f = file.files[0];
+    file.value = "";
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const p = JSON.parse(reader.result);
+        const r = p.render || {}, v = p.visor || {};
+        // mode
+        const modeBtn = document.querySelector(`.seg-btn[data-mode="${r.mode === "split" ? "split" : "total"}"]`);
+        if (modeBtn) modeBtn.click();
+        // heights
+        const setPct = (id, outId, val) => {
+          const el = document.getElementById(id), o = document.getElementById(outId);
+          if (!el || val == null) return;
+          el.value = val; if (o) o.textContent = pct(val);
+          el.dispatchEvent(new Event("input", { bubbles: true }));
+        };
+        if (r.height_pct != null) setPct("totalHeight", "totalOut", Math.round(r.height_pct));
+        if (v.width_pct != null) setPct("visorW", "visorWOut", Math.round(v.width_pct));
+        if (v.height_pct != null) setPct("visorH", "visorHOut", Math.round(v.height_pct));
+        // visor + overlay toggles
+        const chk = (id, on) => { const el = document.getElementById(id); if (el) { el.checked = !!on; el.dispatchEvent(new Event("change", { bubbles: true })); } };
+        chk("visorOn", v.enabled !== false);
+        const ovMap = { hud: "ovHud", clock: "ovClock", note: "ovNote", crosshair: "ovCross", shift: "ovShift", spotter: "ovSpot", lfe: "ovLfe" };
+        const list = Array.isArray(p.overlays) ? p.overlays : [];
+        Object.keys(ovMap).forEach((k) => chk(ovMap[k], list.indexOf(k) !== -1));
+        msg.textContent = "Profile loaded onto the bench";
+        setTimeout(() => { msg.textContent = ""; }, 3000);
+      } catch (err) {
+        msg.textContent = "Could not read that file — expected a ViewLab .json profile";
+      }
+    };
+    reader.readAsText(f);
+  });
+})();
+
 /* In-headset menu mock — click rows to cycle values (illustrates live apply). */
 (function () {
   "use strict";
