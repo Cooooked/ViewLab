@@ -1,3 +1,64 @@
+/* ViewLab hero — animated visor/aperture motif behind the headline.
+   Independent illustration; no application code or internals. */
+(() => {
+  const cv = document.getElementById("heroCanvas");
+  if (!cv || !cv.getContext) return;
+  const ctx = cv.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w = 0, h = 0, raf = 0, t = 0;
+  function size() {
+    const r = cv.parentElement.getBoundingClientRect();
+    w = cv.width = Math.min(r.width, 1800);
+    h = cv.height = Math.min(r.height, 760);
+  }
+  size();
+  window.addEventListener("resize", size);
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const cx = w / 2, cy = h * 0.30;
+    // breathing aperture — two eye-buffer ellipses with a visor curve
+    for (let eye = 0; eye < 2; eye++) {
+      const ex = cx + (eye === 0 ? -1 : 1) * w * 0.16;
+      const breathe = 1 + Math.sin(t * 0.7 + eye * 1.3) * 0.03;
+      const rx = w * 0.115 * breathe, ry = h * 0.34 * breathe;
+      ctx.beginPath();
+      ctx.ellipse(ex, cy, rx, ry, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(232,232,232,0.10)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // aperture curve (visor mask silhouette)
+      ctx.beginPath();
+      const squash = 0.72 + Math.sin(t * 0.5 + eye) * 0.05;
+      ctx.ellipse(ex, cy, rx * 0.82, ry * squash, 0, Math.PI * 1.05, Math.PI * 1.95);
+      ctx.strokeStyle = "rgba(201,0,18,0.35)";
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+      // faint scanlines inside
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(ex, cy, rx * 0.8, ry * 0.9, 0, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.strokeStyle = "rgba(37,58,85,0.20)";
+      ctx.lineWidth = 1;
+      for (let y = cy - ry; y < cy + ry; y += 7) {
+        ctx.beginPath(); ctx.moveTo(ex - rx, y); ctx.lineTo(ex + rx, y); ctx.stroke();
+      }
+      ctx.restore();
+    }
+    t += 0.008;
+    if (!reduce) raf = requestAnimationFrame(draw);
+  }
+  draw();
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((en) => {
+      en.forEach((e) => {
+        if (e.isIntersecting && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); }
+        else cancelAnimationFrame(raf);
+      });
+    }).observe(cv);
+  }
+})();
+
 /* ViewLab bench — illustrative simulation of ViewLab's user-facing controls.
    Renders a stylised headset view on canvas: render slice, visor mask, overlays.
    Purpose-built demo logic; does not contain or imply the application's internals. */

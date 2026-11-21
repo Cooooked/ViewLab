@@ -253,3 +253,9 @@ input[type="range"]:focus-visible { outline: 2px solid var(--hover); outline-off
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* hero canvas — visor/eye-buffer motif */
+#heroCanvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: .5; pointer-events: none;
+}
