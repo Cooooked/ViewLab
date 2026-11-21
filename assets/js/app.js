@@ -610,3 +610,14 @@
     raf = requestAnimationFrame(frame);
   }
 })();
+
+/* Profile cards drive the bench presets (delegates to existing preset buttons). */
+document.querySelectorAll(".profile-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    const preset = card.dataset.preset;
+    document.querySelectorAll(".profile-card").forEach((c) => c.classList.toggle("is-active", c === card));
+    const btn = document.querySelector(`.preset[data-preset="${preset}"]`);
+    if (btn) btn.click();
+    document.getElementById("bench").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+});
